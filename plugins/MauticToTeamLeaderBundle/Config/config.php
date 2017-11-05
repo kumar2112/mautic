@@ -21,6 +21,7 @@ return [
                 'class'     => 'MauticPlugin\MauticToTeamLeaderBundle\EventListener\FormSubscriber',
                 'arguments' => [
                     'mautic.email.model.email',
+                    'mautic.helper.integration'
                 ],
             ],
         ],

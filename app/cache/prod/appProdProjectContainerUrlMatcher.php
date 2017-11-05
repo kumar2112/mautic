@@ -458,11 +458,6 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
 
         }
 
-        // mautic_plugin_fullcontact_index
-        if ($pathinfo === '/fullcontact/callback') {
-            return array (  '_controller' => 'MauticPlugin\\MauticFullContactBundle\\Controller\\PublicController::callbackAction',  '_route' => 'mautic_plugin_fullcontact_index',);
-        }
-
         if (0 === strpos($pathinfo, '/citrix')) {
             // mautic_citrix_proxy
             if ($pathinfo === '/citrix/proxy') {
@@ -476,17 +471,30 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
 
         }
 
-        if (0 === strpos($pathinfo, '/focus')) {
-            // mautic_focus_generate
-            if (preg_match('#^/focus/(?P<id>[^/\\.]++)\\.js$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'mautic_focus_generate')), array (  '_controller' => 'MauticPlugin\\MauticFocusBundle\\Controller\\PublicController::generateAction',));
+        if (0 === strpos($pathinfo, '/f')) {
+            // mautic_plugin_fullcontact_index
+            if ($pathinfo === '/fullcontact/callback') {
+                return array (  '_controller' => 'MauticPlugin\\MauticFullContactBundle\\Controller\\PublicController::callbackAction',  '_route' => 'mautic_plugin_fullcontact_index',);
             }
 
-            // mautic_focus_pixel
-            if (preg_match('#^/focus/(?P<id>[^/]++)/viewpixel\\.gif$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'mautic_focus_pixel')), array (  '_controller' => 'MauticPlugin\\MauticFocusBundle\\Controller\\PublicController::viewPixelAction',));
+            if (0 === strpos($pathinfo, '/focus')) {
+                // mautic_focus_generate
+                if (preg_match('#^/focus/(?P<id>[^/\\.]++)\\.js$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'mautic_focus_generate')), array (  '_controller' => 'MauticPlugin\\MauticFocusBundle\\Controller\\PublicController::generateAction',));
+                }
+
+                // mautic_focus_pixel
+                if (preg_match('#^/focus/(?P<id>[^/]++)/viewpixel\\.gif$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'mautic_focus_pixel')), array (  '_controller' => 'MauticPlugin\\MauticFocusBundle\\Controller\\PublicController::viewPixelAction',));
+                }
+
             }
 
+        }
+
+        // mautic_plugin_clearbit_index
+        if ($pathinfo === '/clearbit/callback') {
+            return array (  '_controller' => 'MauticPlugin\\MauticClearbitBundle\\Controller\\PublicController::callbackAction',  '_route' => 'mautic_plugin_clearbit_index',);
         }
 
         if (0 === strpos($pathinfo, '/plugin')) {
@@ -511,11 +519,6 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
             }
             not_mautic_integrationpipedrivewebhook:
 
-        }
-
-        // mautic_plugin_clearbit_index
-        if ($pathinfo === '/clearbit/callback') {
-            return array (  '_controller' => 'MauticPlugin\\MauticClearbitBundle\\Controller\\PublicController::callbackAction',  '_route' => 'mautic_plugin_clearbit_index',);
         }
 
         if (0 === strpos($pathinfo, '/s')) {

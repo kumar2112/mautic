@@ -47,6 +47,6 @@ class TeamleaderdApi extends CrmApi
      */
     public function createLead(array $data)
     {
-        return $this->request('create', $this->element, $data, 'POST');
+        return $this->request('https://app.teamleader.eu/api/addContact.php','', $data, 'POST');
     }
 }

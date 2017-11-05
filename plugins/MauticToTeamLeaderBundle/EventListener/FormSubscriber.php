@@ -17,6 +17,8 @@ use Mautic\FormBundle\Event\FormBuilderEvent;
 use Mautic\FormBundle\Event\SubmissionEvent;
 use Mautic\FormBundle\FormEvents;
 use Mautic\LeadBundle\LeadEvents;
+use Mautic\PluginBundle\PluginEvents;
+use Mautic\PluginBundle\Helper\IntegrationHelper;
 
 /**
  * Class FormSubscriber.
@@ -27,15 +29,21 @@ class FormSubscriber extends CommonSubscriber
      * @var EmailModel
      */
     protected $emailModel;
+    
+    /**
+     * @var EmailModel
+     */
+    protected $integrationHelper;
 
     /**
      * FormSubscriber constructor.
      *
      * @param EmailModel $emailModel
      */
-    public function __construct(EmailModel $emailModel)
+    public function __construct(EmailModel $emailModel,IntegrationHelper $integrationHelper)
     {
         $this->emailModel = $emailModel;
+        $this->integrationHelper=$integrationHelper;
     }
 
     /**
@@ -44,9 +52,7 @@ class FormSubscriber extends CommonSubscriber
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::ON_EXECUTE_SUBMIT_ACTION => [
-                ['onFormSubmitAction', 0],
-            ],
+            PluginEvents::ON_FORM_SUBMIT_ACTION_TRIGGERED => ['onFormSubmitActionTriggered', 0],
             
         ];
     }
@@ -56,11 +62,22 @@ class FormSubscriber extends CommonSubscriber
      *
      * @param FormBuilderEvent $event
      */
-    public function onFormSubmitAction(Events\SubmissionEvent $event)
+    public function onFormSubmitActionTriggered(SubmissionEvent $event)
     {
-        $form = $event->getForm();
-        $fields=$form->getFields();
-        echo "fsdfdsfsd"; die();
+        //print_r($event);die();
+        $config = $event->getActionConfig();
+        $integration=$config['integration'];;
+        $service=$this->integrationHelper->getIntegrationObject($integration);
+        
+        $fields = array(  
+	"forename"=>"Kumar",
+	"surname"=>"Praveen"
+        );
+
+        $service->createLead($fields);
+        //$lead   = $event->getLead();
+
+        //$this->pushToIntegration($config, $lead);
     }
 
     

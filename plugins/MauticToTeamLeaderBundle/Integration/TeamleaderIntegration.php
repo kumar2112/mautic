@@ -91,4 +91,14 @@ class TeamleaderIntegration extends AbstractIntegration
             'requires_authorization' => false,
         ];
     }
+    
+    /**
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function createLead(array $data)
+    {
+        
+    }
 }
