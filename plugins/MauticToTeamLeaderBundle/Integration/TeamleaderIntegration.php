@@ -99,6 +99,33 @@ class TeamleaderIntegration extends AbstractIntegration
      */
     public function createLead(array $data)
     {
-        
+        //$form = $event->getForm();
+        //$fields=$form->getFields();
+        $url = "https://app.teamleader.eu/api/addContact.php";
+
+        // $fields contains all the fields that will be POSTed
+        $fields = array( 
+        "api_group"=>"77789",
+        "api_secret"=>"AkfXUyS8WDkd7yQk1DRoa09sLv5x2XAt8FgS3YQQs0TqoABg3iu39umKQi8I6y2449MYYsEgjowyOXEI6ZC5kPG0XEzT3rNYrqMfIglSvIgawKItAapKQVADq0nki18zhKEQRQycpEcLfL5FMkfs5GWmw9wF0u474zNMfcOvGR7Lt2h5cmo8Takg9GL00GYV5CxbEcwb",
+        "forename"=>"Harish",
+        "surname"=>"Salve",
+        "email"=>"kr.pkumar22@gmail.com" 
+
+        );
+
+        // Make the POST request using Curl
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, true); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+
+        // Decode and display the output
+        $api_output = curl_exec($ch);
+        $json_output = json_decode($api_output);
+        $output = $json_output?$json_output:$api_output;
+
+        // Clean up
+        curl_close($ch);
     }
 }
